@@ -4,6 +4,7 @@ import com.project.models.entitys.Player;
 import com.project.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,5 +50,18 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<Player> getPlayerOnEventByIds(List<Long> ids) {
         return playerRepository.findAllById(ids);
+    }
+
+    @Override
+    public List<Player> getPlayersOnCategories(List<Long> ids) {
+        if(ids == null || ids.isEmpty()){
+            return null;
+        }
+        List<Player> players = new ArrayList<>();
+        for(Long id : ids){
+            List<Player> getPlayers = playerRepository.findByCategoryId(id);
+            players.addAll(getPlayers);
+        }
+        return players;
     }
 }

@@ -64,6 +64,12 @@ public class PlayerController {
         List<Player> players =service.getPlayerByName(name);
         return ResponseEntity.status(HttpStatus.OK).body(players);
     }
+
+    @GetMapping("/get-player-from-categories/{ids}")
+    public ResponseEntity<List<Player>> getPlayersByCategoriesIds(@PathVariable List<Long> ids) {
+        List<Player> players = service.getPlayersOnCategories(ids);
+        return ResponseEntity.status((HttpStatus.OK)).body(players);
+    }
     @DeleteMapping("/delete-player/{id}")
     public void deletePlayerById(@PathVariable Long id) {
         service.deletePlayer(id);
