@@ -12,6 +12,6 @@ public interface PlayerService {
     public  List<Player> getPlayersByCategory(Long id);
     public  List<Player> getPlayerByName(String name);
     public List<Player> getPlayerOnEventByIds(List<Long> ids);
-
+    public List<Player> getPlayersOnCategories(List<Long> ids);
 
 }
