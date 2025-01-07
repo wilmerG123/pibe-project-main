@@ -7,14 +7,20 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "coach")
+@Data
+@NoArgsConstructor
 public class Coach extends User {
 
 
@@ -30,9 +36,6 @@ public class Coach extends User {
     private List<Category> categories = new ArrayList<>();
 
 
-    public Coach() {
-    }
-
     public Coach(CoachDTO coachDTO) {
         if (coachDTO.getCategories() != null) {
             List<Category> categorias = coachDTO.getCategories().stream()
@@ -42,32 +45,10 @@ public class Coach extends User {
         }
         this.setName(coachDTO.getName());
         this.setLastName(coachDTO.getLastName());
-        this.setMail(coachDTO.getMail());
+        this.setEmail(coachDTO.getMail());
         this.setUserName(coachDTO.getUserName());
         this.setPhone(coachDTO.getPhone());
         this.setPassword(coachDTO.getPassword());
 
-
-    }
-
-    public Coach(Long id) {
-        super();
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
     }
 }

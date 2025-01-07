@@ -2,20 +2,18 @@ package com.project.models.entitys;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.models.dtos.PlayerDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "players")
+@Data
+@NoArgsConstructor
 public class Player extends User {
 
 
@@ -33,11 +31,13 @@ public class Player extends User {
     @ManyToMany(mappedBy = "players")
     @JsonBackReference
     private List<Event> events;
-
-
-    public Player() {
-
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "players_tutores",
+            joinColumns = @JoinColumn(name = "player_id"),
+            inverseJoinColumns = @JoinColumn(name = "tutor_id")
+    )
+    private List<Tutor> tutores;
 
     public Player(Long id, Category category, String age, City city, String birthday, List<Event> events) {
         super();
@@ -57,53 +57,12 @@ public class Player extends User {
         this.setId(player.getId());
         this.setName(player.getName());
         this.setLastName(player.getLastName());
-        this.setMail(player.getMail());
+        this.setEmail(player.getMail());
         this.setUserName(player.getUserName());
         this.setBirthday(player.getBirthday());
         this.setAge(player.getAge());
         this.setPhone(player.getPhone());
         this.setPassword(player.getPassword());
         this.setCity(player.getCity() != null && player.getCity().getId() != null ? new City(player.getCity().getId()) : null);
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
     }
 }
